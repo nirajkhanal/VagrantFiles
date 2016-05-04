@@ -3,28 +3,25 @@
   remote_user: vagrant
   sudo: yes
   tasks:
-    - name: install required packages
-      apt:
-        update_cache: yes
-	name: "{{ item }}"
-	state: latest
-      with_items:
-       	- build-essential
-	- git-core
-	- curl
-	- sqlite3
-	- libsqlite3-dev
-	- libxml2-dev
-	- libxslt1-dev
-	- libreadline-dev
-	- libyaml-dev
-	- libcurl14-openssl-dev
-	- libncurses5-dev
-	- libgdbm-dev
-	- libffi-dev
-	- runit
-	- postgresql-9.3
-	- libpq-dev
-	- nodejs
+  - name: install required packages
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - build-essential
+      - git-core
+      - curl
+      - sqlite3
+      - libsqlite3-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - libreadline-dev
+      - libyaml-dev
+      - libcurl14-openssl-dev
+      - libncurses5-dev
+      - libgdbm-dev
+      - libffi-dev
+      - runit
+      - postgresql-9.3
+      - libpq-dev
+      - nodejs
 
 
