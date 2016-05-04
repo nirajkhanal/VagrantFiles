@@ -1,9 +1,30 @@
 ---
 - hosts: all
-  user: vagrant
-  sudo: true
+  remote_user: vagrant
+  sudo: yes
   tasks:
-    - name: Installs git
-      apt: pkg=git state=installed update_cache=true
+    - name: Installs required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+	update_cache: yes
+      with_items:
+	- build-essential
+	- git-core
+	- curl
+	- sqlite3
+	- libsqlite3-dev
+	- libxml2-dev
+	- libxslt1-dev
+	- libreadline-dev
+	- libyaml-dev
+	- libcurl14-openssl-dev
+	- libncurses5-dev
+	- libgdbm-dev
+	- libffi-dev
+	- runit
+	- postgresql-9.3
+	- libpq-dev
+	- nodejs
 
 
