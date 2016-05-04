@@ -4,7 +4,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.sudo = true
-    ansible.playbook = '../Ansible/Provisioning/playbook.yml'
+    ansible.playbook = '/Users/nirajkhanal/Desktop/Vagrant/vagrant_getting_started/VagrantFiles/Ansible/Provisioning/playbook.yml'
   end
 end
 
