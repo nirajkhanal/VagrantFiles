@@ -3,13 +3,13 @@
   remote_user: vagrant
   sudo: yes
   tasks:
-    - name: Installs required packages
+    - name: install required packages
       apt:
-        name: "{{ item }}"
-        state: present
-	update_cache: yes
+        update_cache: yes
+	name: "{{ item }}"
+	state: latest
       with_items:
-	- build-essential
+       	- build-essential
 	- git-core
 	- curl
 	- sqlite3
