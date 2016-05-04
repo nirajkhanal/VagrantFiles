@@ -21,5 +21,50 @@
       - postgresql-9.3
       - libpq-dev
       - nodejs
-
-
+  - name: Create user
+    user:
+      name: sinatraUser
+      createhome: yes
+      shell: /bin/bash
+      group: root
+      generate_ssh_key: yes
+  - name: Copy SSH Key
+    authorized_key:
+      key: "{{ lookup('file', '/Users/nirajkhanal/.ssh/id_rsa.pub') }}"
+      user: "sinatraUser"
+      state: present
+  - name: Download Ruby Build
+    git:
+      repo: https://github.com/sstephenson/ruby-build.git
+      dest: /home/sinatraUser/ruby-build
+      accept_hostkey: yes
+  - name: Install Ruby-Build
+    shell: ./install.sh
+    args:
+      chdir: /home/sinatraUser/ruby-build
+      creates: /usr/local/bin/ruby-build
+  - name: Install Ruby
+    shell: ruby-build 2.2.2 /home/sinatraUser/local/ruby-2.2.2
+    args:
+      creates: /home/sinatraUser/local/ruby-2.2.2
+  - name: Make sinatraUser owner of ruby folder
+    file:
+      path: /home/sinatraUser/local/ruby-2.2.2
+      state: directory
+      group: root
+      owner: sinatraUser
+      recurse: yes
+  - name: Add ruby to path
+    lineinfile:
+      dest: /home/sinatraUser/.profile
+      owner: sinatraUser
+      state: present
+      line: PATH="$PATH:/home/sinatraUser/local/ruby-2.2.2/bin"
+  - name: Install bundler gem
+    environment:
+      PATH: "{{ ansible_env.PATH }}:/home/sinatraUser/local/ruby-2.2.2/bin"
+    remote_user: sinatraUser
+    sudo: no
+    gem: 
+      name: bundler
+      state: present
