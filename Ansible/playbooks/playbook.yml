@@ -64,6 +64,7 @@
     environment:
       PATH: "{{ ansible_env.PATH }}:/home/sinatraUser/local/ruby-2.2.2/bin"
     sudo_user: sinatraUser
-    gem: 
-      name: bundler
-      state: present
+    gem: name={{ item }} state=present
+    with_items:  
+      - bundler
+      - passenger
