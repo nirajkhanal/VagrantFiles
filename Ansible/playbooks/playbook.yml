@@ -63,8 +63,7 @@
   - name: Install bundler gem
     environment:
       PATH: "{{ ansible_env.PATH }}:/home/sinatraUser/local/ruby-2.2.2/bin"
-    remote_user: sinatraUser
-    sudo: no
+    sudo_user: sinatraUser
     gem: 
       name: bundler
       state: present
